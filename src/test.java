@@ -1,3 +1,4 @@
+import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -18,6 +19,36 @@ Runnable, MouseListener
 	private JLabel jlabel;
 	private JLabel showtime;
 	private int[][] map;
+	private int[][] mv = {{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1}};
+	
+	public void makeMine()
+	{
+		int i=0, tx, ty;
+		for(; i<MINE_COUNT;)
+		{
+			tx = (int)(Math.random() * MINE_SIZE);
+			ty = (int)(Math.random() * MINE_SIZE);
+			if(map[tx][ty] == EMPTY)
+			{
+				map[tx][ty] = MINE;
+				i++;
+			}
+		}
+	}
+	
+	public void makeButton()
+	{
+		for(int i=0; i<MINE_SIZE; i++)
+		{
+			for(int j=0; j<MINE_SIZE; j++)
+			{
+				jbutton[i][j] = new JButton();
+				jbutton[i][j].addActionListener(this);
+				jbutton[i][j].addMouseListener(this);
+				jbutton[i][j].setName('('+Integer.toString(i)+','+Integer.toString(j)+')');
+			}
+		}
+	}
 	
 	public void actionPerformed(ActionEvent e)
 	{
