@@ -30,30 +30,59 @@ Runnable, MouseListener
 	{
 		super(title);
 		this.setLayout(null);
-		jbutton = new JButton[MINE_SIZE][MINE_SIZE];
-		map = new int[MINE_SIZE][MINE_SIZE];
-		jlabel = new JLabel();
+		
 		showtime = new JLabel();
 		simplebutton = new JRadioButton("Simple");
 		middlebutton = new JRadioButton("Middle");
 		difficultbutton = new JRadioButton("Difficult");
 		model = new ButtonGroup();
-		
 		simplebutton.setBounds(START_X, START_Y-40, 100, 30);
 		middlebutton.setBounds(START_X+100, START_Y-40, 100, 30);
 		difficultbutton.setBounds(START_X+200, START_Y-40, 100, 30);
 		
 		simplebutton.addActionListener(new ActionListener()
 				{
-					public void actionPerformed(ActionEvent e) {}
+					public void actionPerformed(ActionEvent e)
+					{
+						makeMine();
+						makeButton();
+					}
 				});
 		
+		middlebutton.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						MINE_COUNT = 15;
+						MINE_SIZE = 10;
+						makeMine();
+						jlabel.setText("欢迎测试，一共有"+MINE_COUNT+"个雷");
+	//					makeButton();
+	//					run();
+					}
+				});
 		
+		difficultbutton.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						MINE_COUNT = 20;
+						MINE_SIZE = 10;
+						makeMine();
+						jlabel.setText("欢迎测试，一共有"+MINE_COUNT+"个雷");
+	//					makeButton();
+	//					run();
+					}
+				});
 		
 		model.add(simplebutton);
 		model.add(middlebutton);
 		model.add(difficultbutton);
-		model.setSelected(simplebutton, true);
+//		model.setSelected(simplebutton, true);
+		
+		jbutton = new JButton[MINE_SIZE][MINE_SIZE];
+		map = new int[MINE_SIZE][MINE_SIZE];
+		jlabel = new JLabel();
 	}
 	
 	public void makeMine()
@@ -109,6 +138,7 @@ Runnable, MouseListener
 			{
 				if(map[i][j]==MINE)
 					jbutton[i][j].setText("*");
+				jbutton[i][j].setEnabled(false);
 			}
 		}
 	}
@@ -234,13 +264,31 @@ Runnable, MouseListener
 		showtime.setText("time used：0 s");
 		showtime.setBounds(350, 20, 100, 30);
 		this.add(showtime);
-		makeMine();
+//		makeMine();
 		makeButton();
 		this.setSize(d);
 		this.setLocation(p);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
+		
+		int t = 0;
+		while(true)
+		{
+			if(flag)
+				break;
+			
+			try
+			{
+				Thread.sleep(1000);
+			}catch(InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+			
+			t++;
+			showtime.setText("time used:"+t+"s");
+		}
 	}
 	
 	public void mousePressed(MouseEvent e)
