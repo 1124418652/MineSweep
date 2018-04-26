@@ -45,7 +45,6 @@ Runnable, MouseListener
 					public void actionPerformed(ActionEvent e)
 					{
 						makeMine();
-						makeButton();
 					}
 				});
 		
@@ -138,7 +137,7 @@ Runnable, MouseListener
 			{
 				if(map[i][j]==MINE)
 					jbutton[i][j].setText("*");
-				jbutton[i][j].setEnabled(false);
+			//	jbutton[i][j].setEnabled(false);
 			}
 		}
 	}
